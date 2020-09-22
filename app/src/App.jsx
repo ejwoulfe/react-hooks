@@ -4,38 +4,29 @@ import './App.css';
 
 export default function App() {
 
-    const [resourceType, setResourceType] = useState('posts');
-    const [items, setItems] = useState([]);
+    const [windowWith, setWindowWidth] = useState(window.innerWidth);
 
-    // **Only whenever something in the 2nd parameter array gets changed will it be called.**
+    const handleResize = () => {
+        setWindowWidth(window.innerWidth)
+    }
 
-    // Only gets called when resourceType changes, or whatever is in the 2nd parameter array.
     useEffect(() => {
-        fetch(`https://jsonplaceholder.typicode.com/${resourceType}`)
-            .then(response => response.json())
-            .then(json => setItems(json))
-    }, [resourceType]);
+        window.addEventListener('resize', handleResize)
+
+        // return is clean up
+        // return is run first whenever this useEffect gets called
+        return () => {
+            window.removeEventListener('resize', handleResize)
+        }
+    }, []);
 
 
 
-
-    //onMount = empty array
-    // useEffect(() => {
-    //     console.log('onMount')
-    // }, []);
 
     return (
-        <>
-            <div>
-                <button onClick={() => setResourceType('posts')}>Posts</button>
-                <button onClick={() => setResourceType('users')}>Users</button>
-                <button onClick={() => setResourceType('comments')}>Comments</button>
-            </div>
-            <h1>{resourceType}</h1>
-            {items.map(item => {
-                return <pre>{JSON.stringify(item)}</pre>
-            })}
-        </>
+        <div>
+            {windowWith}
+        </div>
     )
 
 
