@@ -8,8 +8,6 @@ export default function App() {
     const [items, setItems] = useState([]);
 
     // **Only whenever something in the 2nd parameter array gets changed will it be called.**
-
-    // Only gets called when resourceType changes, or whatever is in the 2nd parameter array.
     useEffect(() => {
         fetch(`https://jsonplaceholder.typicode.com/${resourceType}`)
             .then(response => response.json())
