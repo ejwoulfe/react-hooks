@@ -1,26 +1,39 @@
 import React, { useState } from 'react';
-import FunctionContextComponent from './FunctionContextComponent';
-import ClassContextComponent from './ClassContextComnponent';
 
-export const ThemeContext = React.createContext();
 
 export default function App() {
-    const [darkTheme, setDarkTheme] = useState(true);
 
-    function toggleTheme() {
-        setDarkTheme(prevDarkTheme => !prevDarkTheme);
+
+    const [state, setState] = useState({
+        count: 4, theme:
+            'blue'
+    });
+    const count = state.count;
+    const theme = state.theme;
+
+    function incrementCount() {
+        setState(prevState => {
+            return { ...prevState, count: prevState.count + 1 }
+        });
+    }
+    function changeTheme() {
+        setState(prevState => {
+            return { ...prevState, theme: prevState.theme = 'red' }
+        });
     }
 
     return (
-        // Need a Provider and consumer. Provider wraps the components that want to inherit the value, in this case darkTheme.
-        // On button push it will toggle true or false for darkTheme. The child components will then decide which style based on the boolean.
         <>
-            <ThemeContext.Provider value={darkTheme}>
-                <button onClick={toggleTheme}> Toggle Theme </button>
-                <FunctionContextComponent></FunctionContextComponent>
-                <ClassContextComponent></ClassContextComponent>
-            </ThemeContext.Provider>
+            <h1>The current count is: {count}</h1>
+            <button onClick={incrementCount}>+</button>
+            <button onClick={changeTheme}>-</button>
+            <span>{count}</span>
+            <span>{theme}</span>
+
+
         </>
+
+
 
     )
 }
